@@ -7,19 +7,19 @@
 
 import SwiftUI
 
-struct AnyDestination: Hashable {
+public struct AnyDestination: Hashable {
     let id = UUID().uuidString
     var destination: AnyView
     
-    init<T: View>(destination: T) {
+    public init<T: View>(destination: T) {
         self.destination = AnyView(destination)
     }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
     
-    static func == (lhs: AnyDestination, rhs: AnyDestination) -> Bool {
+    public static func == (lhs: AnyDestination, rhs: AnyDestination) -> Bool {
         lhs.hashValue == rhs.hashValue
     }
 }

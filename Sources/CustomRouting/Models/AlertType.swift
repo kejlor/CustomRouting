@@ -5,6 +5,6 @@
 //  Created by Bartosz Wojtkowiak on 26/11/2025.
 //
 
-enum AlertType {
+public enum AlertType {
     case alert, confirmationDialog
 }

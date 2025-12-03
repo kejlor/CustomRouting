@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-extension EnvironmentValues {
+ public extension EnvironmentValues {
     @Entry var router: Router = MockRouter()
 }
 
-protocol Router {
+public protocol Router {
     func showScreen<T: View>(_ option: SegueOption, @ViewBuilder destination: @escaping (Router) -> T)
     func dismissScreen()
     

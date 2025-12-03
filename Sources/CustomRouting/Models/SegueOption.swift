@@ -5,7 +5,7 @@
 //  Created by Bartosz Wojtkowiak on 26/11/2025.
 //
 
-enum SegueOption {
+public enum SegueOption {
     case push, sheet, fullScreenCover
     
     var shouldAddNewNavigationView: Bool {
