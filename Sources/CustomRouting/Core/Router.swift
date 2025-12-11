@@ -7,7 +7,7 @@
 
 import SwiftUI
 
- public extension EnvironmentValues {
+public extension EnvironmentValues {
     @Entry var router: Router = MockRouter()
 }
 
@@ -23,7 +23,7 @@ public protocol Router {
 }
 
 struct MockRouter: Router {
-    func showScreen<T>(_ option: SegueOption, @ViewBuilder destination: @escaping (Router) -> T) where T : View {
+    func showScreen<T: View>(_ option: SegueOption, @ViewBuilder destination: @escaping (Router) -> T) where T : View {
         print("Mock router does not work.")
     }
     
@@ -31,7 +31,7 @@ struct MockRouter: Router {
         print("Mock router does not work.")
     }
     
-    func showAlert(_ option: AlertType, title: String, subtitle: String?, buttons: (@Sendable () -> AnyView)?) {
+    func showAlert(_ option: AlertType, title: String, subtitle: String?, buttons: (() -> AnyView)?) {
         print("Mock router does not work.")
     }
     
@@ -39,7 +39,7 @@ struct MockRouter: Router {
         print("Mock router does not work.")
     }
     
-    func showModal<T: View>(backgroundColor: Color, transition: AnyTransition, @ViewBuilder destination: @escaping () -> T) {
+    func showModal<T: View>(backgroundColor: Color, transition: AnyTransition, @ViewBuilder destination: @escaping () -> T) where T : View {
         print("Mock router does not work.")
     }
     

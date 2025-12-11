@@ -18,18 +18,20 @@ import SwiftUI
 
 public struct RouterView<Content: View>: View, Router {
     @Environment(\.dismiss) private var dismiss
+
     @State private var path: [AnyDestination] = []
+    
     @State private var showSheet: AnyDestination? = nil
     @State private var showFullScreenCover: AnyDestination? = nil
-    
+
     @State private var alert: AnyAppAlert? = nil
     @State private var alertOption: AlertType = .alert
-    
+
     @State private var modalBackgroundColor: Color = Color.black.opacity(0.6)
-    @State private var modalTransition: AnyTransition = .opacity
+    @State private var modalTransition: AnyTransition = AnyTransition.opacity
     @State private var modal: AnyDestination? = nil
-    
-    // MARK: Binding to the view stack from previous RouterViews
+
+    // Binding to the view stack from previous RouterViews
     @Binding var screenStack: [AnyDestination]
     
     var addNavigationView: Bool
@@ -44,7 +46,7 @@ public struct RouterView<Content: View>: View, Router {
         self.addNavigationView = addNavigationView
         self.content = content
     }
-    
+
     public var body: some View {
         NavigationStackIfNeeded(path: $path, addNavigationView: addNavigationView) {
             content(self)
@@ -52,11 +54,7 @@ public struct RouterView<Content: View>: View, Router {
                 .fullScreenCoverViewModifier(screen: $showFullScreenCover)
                 .showCustomAlert(type: alertOption, alert: $alert)
         }
-        .modalViewModifier(
-            backgroundColor: modalBackgroundColor,
-            transition: modalTransition,
-            screen: $modal
-        )
+        .modalViewModifier(backgroundColor: modalBackgroundColor, transition: modalTransition, screen: $modal)
         .environment(\.router, self)
     }
     
@@ -73,8 +71,10 @@ public struct RouterView<Content: View>: View, Router {
         switch option {
         case .push:
             if screenStack.isEmpty {
+                // This means we are in the first RouterView
                 path.append(destination)
             } else {
+                // This means we are in a secondary RouterView
                 screenStack.append(destination)
             }
         case .sheet:
@@ -82,8 +82,6 @@ public struct RouterView<Content: View>: View, Router {
         case .fullScreenCover:
             showFullScreenCover = destination
         }
-        
-        showSheet = destination
     }
     
     public func dismissScreen() {

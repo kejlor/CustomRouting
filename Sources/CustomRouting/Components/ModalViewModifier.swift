@@ -23,7 +23,7 @@ struct ModalSupportView<Content: View>: View {
                         showModal = false
                     }
                     .zIndex(1)
-                
+
                 content
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .ignoresSafeArea()
@@ -37,13 +37,9 @@ struct ModalSupportView<Content: View>: View {
 }
 
 extension View {
-    func modalViewModifier(
-        backgroundColor: Color,
-        transition: AnyTransition,
-        screen: Binding<AnyDestination?>
-    ) -> some View {
+    func modalViewModifier(backgroundColor: Color, transition: AnyTransition, screen: Binding<AnyDestination?>) -> some View {
         self
-            .overlay {
+            .overlay(
                 ModalSupportView(backgroundColor: backgroundColor, transition: transition, showModal: Binding(ifNotNil: screen)) {
                     ZStack {
                         if let screen = screen.wrappedValue {
@@ -51,6 +47,6 @@ extension View {
                         }
                     }
                 }
-            }
+            )
     }
 }
